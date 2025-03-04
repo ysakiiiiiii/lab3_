@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+</head>
+<body>
+    <h1>To Do List</h1>    
+
+        <div id="container">
+
+            <h2>Your-To-Do-List</h2>
+                <ol id="task-list">
+
+                </ol>
+            <form id="task-form"">
+                <input type="text" id="task-input"></input>
+                <input type="submit" value="Add Task">
+            </form>
+        </div>
+
+        <script>
+            let tasks = [];
+
+            document.getElementById("task-form").addEventListener("submit", function(event) {
+                event.preventDefault();
+                addTask();
+            });
+
+            function addTask(){
+                let task_input = document.getElementById("task-input");
+                let task = task_input.value.trim();
+                if (task === ""){
+                    alert("Task Can't Be Empty!. Please put a valid input ");
+                    return;
+                }
+                tasks.push(task)
+                task_input.value = "";
+                renderTasks();
+            }
+            function renderTasks(){
+                const taskList = document.getElementById("task-list");
+                taskList.innerHTML= "";
+                tasks.forEach((task, index) => {
+                const li = document.createElement("li");
+                li.innerHTML = `${task} <button onclick="removeTask(${index})"> X </button>`;
+                taskList.appendChild(li);    
+                });
+            }
+
+            function removeTask(index){
+                if(confirm("Are you sure to remove this task?"))
+                tasks.splice(index, 1);
+                renderTasks();
+            }
+            
+        </script>
+</body>
+</html>
